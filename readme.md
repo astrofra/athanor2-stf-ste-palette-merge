@@ -36,5 +36,5 @@ typedef struct _NeochromeHeader
 
 * *This tool was made for the ATARI ST version of Athanor 2. It has no other purpose*
 * *Distributed with a tiny subset of [ImageMagick](https://imagemagick.org) (Windows Binary)*
-* *Possible improvment : automatically convert the STF PNG file into a NEO file*
+* *Possible improvement : automatically convert the STF PNG file into a NEO file*
 * *Any question : astrofra[at]gmail[dot*

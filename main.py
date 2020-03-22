@@ -58,14 +58,16 @@ def main():
 		# get 2 files :
 		# STE PNG file
 		# STF NEO file
-		files = os.listdir(os.path.join(in_folder, entry))
-		if len(files) == 3:
-			# stf_png = [x for x in files if x.lower().endswith('_stf.png')][0]
-			ste_png = [x for x in files if x.lower().endswith('_ste.png')][0]
-			stf_neo = [x for x in files if x.lower().endswith('_stf.neo')][0]
-			if ste_png is None or stf_neo is None:
+		in_files = os.listdir(os.path.join(in_folder, entry))
+		if len(in_files) >= 2:
+			ste_png = [x for x in in_files if x.lower().endswith('_ste.png')]
+			stf_neo = [x for x in in_files if x.lower().endswith('_stf.neo')]
+			if not ste_png or not stf_neo:
 				print("!Missing one of the 2 files (ste.png/stf.neo")
 			else:
+				ste_png = ste_png[0]
+				stf_neo = stf_neo[0]
+
 				# create out folder
 				out_file_path = os.path.join(out_folder, entry)
 				if os.path.exists(out_file_path):
@@ -123,7 +125,8 @@ def main():
 					# write the remaining of the NEO file
 					neo_out_file.write(neo_b_bitmap)
 		else:
-			print("!Need 3 files, found " + str(len(files)))
+			print("Files missing!")
+			print(in_files)
 
 
 if __name__ == "__main__":
