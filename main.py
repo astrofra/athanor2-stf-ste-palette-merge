@@ -90,6 +90,7 @@ def main():
 						json_palette = data['image']['colormap']
 						# print(json_palette)
 						ste_palette = []
+						json_palette = json_palette[:16]
 						for color in json_palette:
 							r = c4bits(int(color[1:3], 16))
 							g = c4bits(int(color[3:5], 16))
@@ -135,6 +136,8 @@ def main():
 
 					# write the remaining of the NEO file
 					neo_out_file.write(neo_b_bitmap)
+
+					neo_out_file.close()
 		else:
 			print("Files missing!")
 			print(in_files)
