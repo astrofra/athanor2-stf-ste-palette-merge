@@ -21,8 +21,10 @@
 # 	WORD Reserved[33];     /* Reserved (always 00h) */ # /!\ NOT FOUND IN AN ACTUAL NEO FILE
 # } NEOCHROMEHEAD;
 #
-# STf : xxxx xRRR xVVV xBBB
-# STe : xxxx RRRR VVVV BBBB
+# STE Color encoding
+# STF: xbbb xggg xrrr
+# STE: bbbb gggg rrrr
+# Bits ordered as: 0321
 #
 # Distributed with a tiny subset of ImageMagick (Windows Binary)
 
@@ -35,8 +37,8 @@ out_folder = 'out'
 bin_folder = 'bin'
 tmp_folder = '_tmp'
 
-neo_bitmap_size = 320 * 200 * 8 // 2
-neo_byte_size = 32128
+neo_bitmap_size = (320 * 200) // 2
+# neo_byte_size = 32128
 
 
 def c4bits(fcol):
@@ -115,7 +117,16 @@ def main():
 
 					# write STE palette
 					for col in ste_palette:
+						# encode the STE palette
+
+						# b1110 = 0xE
+						# b0001 = 0x1
 						r, g, b = col[0], col[1], col[2]
+
+						r = ((r & 0x1) << 3) | ((r & 0xE) >> 1)
+						g = ((r & 0x1) << 3) | ((g & 0xE) >> 1)
+						b = ((r & 0x1) << 3) | ((b & 0xE) >> 1)
+
 						hi_byte = r
 						low_byte = (g << 4) | b
 

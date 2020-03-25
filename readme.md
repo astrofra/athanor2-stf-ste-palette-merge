@@ -29,8 +29,9 @@ typedef struct _NeochromeHeader
 
 ## Color encoding in the resulting file
 
-* STf : xxxx xRRR xVVV xBBB
-* STe : xxxx RRRR VVVV BBBB
+* STF: xbbb xggg xrrr
+* STE: bbbb gggg rrrr
+  * Bits ordered as: 0321
 
 ## About...
 
