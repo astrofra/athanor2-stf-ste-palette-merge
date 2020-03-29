@@ -97,6 +97,8 @@ def main():
 							b = c4bits(int(color[5:], 16))
 
 							ste_palette.append([r, g, b])
+
+						print(ste_palette)
 				except:
 					print("!cannot extract palette!")
 					ste_palette = [[7, 0, 7]] * 16
@@ -120,16 +122,18 @@ def main():
 					for col in ste_palette:
 						# encode the STE palette
 
-						# b1110 = 0xE
-						# b0001 = 0x1
 						r, g, b = col[0], col[1], col[2]
 
-						r = ((r & 0x1) << 3) | ((r & 0xE) >> 1)
-						g = ((r & 0x1) << 3) | ((g & 0xE) >> 1)
-						b = ((r & 0x1) << 3) | ((b & 0xE) >> 1)
+						r <<= 4
+						g <<= 4
+						b <<= 4
 
-						hi_byte = r
-						low_byte = (g << 4) | b
+						w = ((r & 0xe0) << 3) | ((r & 0x10) << 7)
+						w |= ((g & 0xe0) >> 1) | ((g & 0x10) << 3)
+						w |= ((b & 0xe0) >> 5) | ((b & 0x10) >> 1)
+
+						hi_byte = w >> 8
+						low_byte = w & 0xff
 
 						neo_out_file.write(hi_byte.to_bytes(1, byteorder='big', signed=False))
 						neo_out_file.write(low_byte.to_bytes(1, byteorder='big', signed=False))
