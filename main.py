@@ -109,8 +109,10 @@ def main():
 					neo_file.read(4)
 					# get palette
 					neo_stf_palette = neo_file.read(16 * 2)
-					# skip the remaining header
-					neo_file.read(12 + 2 + 2 + 2 + 2 + 2 + 2 + 2)
+
+				with open(os.path.join(in_folder, entry, stf_neo), "rb") as neo_file:
+					# skip the header
+					neo_file.read(128)
 					# get bitmap
 					neo_b_bitmap = neo_file.read(neo_bitmap_size)
 
